@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "token-preference"
+version = "0.1.0"
+description = "Teacher-forced token preference training with a conditional custom backward"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "NLPO contributors"}]
+dependencies = ["torch>=2.2"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Repository = "https://github.com/schonsense/NLPO"
+Issues = "https://github.com/schonsense/NLPO/issues"
+
+[project.optional-dependencies]
+trainer = ["transformers>=4.50,<6", "accelerate>=1.0"]
+test = ["pytest>=8"]
+dev = ["pytest>=8", "build>=1", "transformers>=4.50,<6", "accelerate>=1.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"

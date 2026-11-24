@@ -1,0 +1,20 @@
+name: tests
+on: [push, pull_request]
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+        transformers: ["transformers>=4.50,<5", "transformers>=5,<6"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e '.[dev]' '${{ matrix.transformers }}'
+      - run: python -m pytest
+      - run: python examples/tiny_cpu.py --steps 2
+      - run: python -m build
